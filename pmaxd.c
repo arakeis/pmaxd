@@ -20,7 +20,7 @@ time_t lastValidSerialIO;
 
 #include "debug.h" 
 #include "pmax_constant.h"
-#include "pmaxd-xpl.c"
+/*#include "pmaxd-xpl.c"*/
 
  
 
@@ -118,7 +118,7 @@ void initSerialPort() {
 
 void parseCommandLineArgs(int argc, char **argv) {     
   char c;
- if (!xPL_parseCommonArgs(&argc, argv, FALSE)) exit(1);
+ 
 
   while ((c = getopt (argc, argv, "fvh")) != -1)
     switch (c)  {
@@ -130,8 +130,8 @@ void parseCommandLineArgs(int argc, char **argv) {
         break;             
       case 'h':
         fprintf (stderr, "usage:\n\t-f start in foreground \n\t-v enable verbose you cannot use more than vvvvv in daemon mode");
-        fprintf (stderr, "\n\t-interface lo/eth0/... the network interface where xpl is listening");
-        fprintf (stderr, "\n\t-xpldebug anable xpl debugging");
+        /*fprintf (stderr, "\n\t-interface lo/eth0/... the network interface where xpl is listening");
+        fprintf (stderr, "\n\t-xpldebug anable xpl debugging");*/*
   
         exit(0);
       case '?':
@@ -450,7 +450,7 @@ int main(int argc, char **argv) {
  	int loop=0;
   DEBUG(LOG_NOTICE,"Starting......");
   
- 	initXpl();
+ 	/*initXpl();*/
   initSerialPort();  
 	PmaxInit(); 
   DEBUG(LOG_DEBUG,"Sarting main loop....");
@@ -468,7 +468,7 @@ int main(int argc, char **argv) {
     
        
     usleep(1000);
-    xPL_processMessages(0);
+    /*xPL_processMessages(0);*/
   }  
   closelog ();
   exit(EXIT_SUCCESS);

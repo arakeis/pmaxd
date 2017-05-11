@@ -130,8 +130,8 @@ void parseCommandLineArgs(int argc, char **argv) {
         break;             
       case 'h':
         fprintf (stderr, "usage:\n\t-f start in foreground \n\t-v enable verbose you cannot use more than vvvvv in daemon mode");
-        /*fprintf (stderr, "\n\t-interface lo/eth0/... the network interface where xpl is listening");
-        fprintf (stderr, "\n\t-xpldebug anable xpl debugging");*/*
+        fprintf (stderr, "\n\t-interface lo/eth0/... the network interface where xpl is listening");
+        fprintf (stderr, "\n\t-xpldebug anable xpl debugging");*
   
         exit(0);
       case '?':

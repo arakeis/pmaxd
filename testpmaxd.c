@@ -1,7 +1,7 @@
 #include <stdio.h>
 //#include <stdlib.h>
 #include <libconfig.h> 
-#include <xPL.h>
+//#include <xPL.h>
 #include <stdarg.h>
 //#include <errno.h>
 #include <syslog.h>
@@ -9,7 +9,7 @@
 #include <sys/reboot.h>
 #include "debug.h" 
 
-static xPL_ServicePtr webgateway = NULL;
+//static xPL_ServicePtr webgateway = NULL;
 
 int    pmaxstatus=0;
 
@@ -41,7 +41,7 @@ void initLog(int verboseLevel) {
 
 void parseCommandLineArgs(int argc, char **argv) {     
   char c;
- if (!xPL_parseCommonArgs(&argc, argv, FALSE)) exit(1);
+ //if (!xPL_parseCommonArgs(&argc, argv, FALSE)) exit(1);
 
   while ((c = getopt (argc, argv, "fvh")) != -1)
     switch (c)  {
@@ -53,8 +53,8 @@ void parseCommandLineArgs(int argc, char **argv) {
         break;             
       case 'h':
         fprintf (stderr, "usage:\n\t-f start in foreground \n\t-v enable verbose you cannot use more than vvvvv in daemon mode");
-        fprintf (stderr, "\n\t-interface lo/eth0/... the network interface where xpl is listening");
-        fprintf (stderr, "\n\t-xpldebug anable xpl debugging");
+        //fprintf (stderr, "\n\t-interface lo/eth0/... the network interface where xpl is listening");
+        //fprintf (stderr, "\n\t-xpldebug anable xpl debugging");
   
         exit(0);
       case '?':
@@ -70,7 +70,7 @@ void parseCommandLineArgs(int argc, char **argv) {
   
   
   
-
+/*
 void webgatewayMessageHandler(xPL_ServicePtr theService, xPL_MessagePtr theMessage, xPL_ObjectPtr userValue) {
  // printf( "Received a pmax Message from %s-%s.%s of type %d for %s.%s\n", 
 	//  xPL_getSourceVendor(theMessage), xPL_getSourceDeviceID(theMessage), xPL_getSourceInstanceID(theMessage),
@@ -89,7 +89,7 @@ void webgatewayMessageHandler(xPL_ServicePtr theService, xPL_MessagePtr theMessa
          }
     }
 }
-
+*/
 
 int main(int argc, char **argv)
 {
@@ -161,17 +161,17 @@ if (config_setting_get_string(restartscript)) {
   
   //sleep(300);
  
-	xPL_initialize(xPL_getParsedConnectionType());
-  webgateway = xPL_createService("viknet", "webgateway", "default");  
-  xPL_setServiceVersion(webgateway, "1.0");
+//	xPL_initialize(xPL_getParsedConnectionType());
+//  webgateway = xPL_createService("viknet", "webgateway", "default");  
+//  xPL_setServiceVersion(webgateway, "1.0");
  
   /* Add a responder for time setting */
-  xPL_addServiceListener(webgateway, webgatewayMessageHandler, xPL_MESSAGE_ANY, "security", NULL, NULL);
-  xPL_setServiceEnabled(webgateway, TRUE);
+//  xPL_addServiceListener(webgateway, webgatewayMessageHandler, xPL_MESSAGE_ANY, "security", NULL, NULL);
+//  xPL_setServiceEnabled(webgateway, TRUE);
   
   DEBUG (LOG_INFO, "starting main loop");
  
-  xPL_MessagePtr xplMessage = NULL;
+ // xPL_MessagePtr xplMessage = NULL;
   sleep(300);
   for (;;)  // infinite loop
   {
@@ -188,14 +188,14 @@ if (config_setting_get_string(restartscript)) {
     }
     pmaxstatus=0;
   
-    DEBUG (LOG_INFO, "creating xpl message");
+  //  DEBUG (LOG_INFO, "creating xpl message");
     /* Create a message to send */
-    xplMessage = xPL_createBroadcastMessage(webgateway, xPL_MESSAGE_COMMAND);
-    xPL_setSchema(xplMessage, "security", "request");
-    xPL_setMessageNamedValue(xplMessage, "request", "gatestat");	
+  //  xplMessage = xPL_createBroadcastMessage(webgateway, xPL_MESSAGE_COMMAND);
+   // xPL_setSchema(xplMessage, "security", "request");
+  //  xPL_setMessageNamedValue(xplMessage, "request", "gatestat");	
     
-    DEBUG (LOG_INFO, "sending xpl message");
-    xPL_sendMessage(xplMessage);
+  //  DEBUG (LOG_INFO, "sending xpl message");
+ //   xPL_sendMessage(xplMessage);
 	
 	  for (i=1;i<1000;i++)
     {
@@ -205,7 +205,7 @@ if (config_setting_get_string(restartscript)) {
         break;
       } 
       
-      xPL_processMessages(0);
+  //    xPL_processMessages(0);
     }
 	  if  (pmaxstatus==0) nblost++;
     if (nblost>3) 
